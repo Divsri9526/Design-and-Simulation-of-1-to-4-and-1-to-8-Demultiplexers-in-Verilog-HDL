@@ -1,0 +1,31 @@
+module demux_1to4_tb;
+    reg din;
+    reg [1:0] sel;
+    wire [3:0] dout;
+
+    demux_1to4 uut (
+        .din(din),
+        .sel(sel),
+        .dout(dout)
+    );
+
+    initial begin
+        $dumpfile("demux_waveform.vcd");
+      $dumpvars(1, demux_1to4_tb);
+        $display("Time\tSel\tDin\tDout");
+        $monitor("%0t\t%b\t%b\t%b", $time, sel, din, dout);
+
+        din = 1;
+        sel = 2'b00; #10;
+        sel = 2'b01; #10;
+        sel = 2'b10; #10;
+        sel = 2'b11; #10;
+
+        din = 0;
+        sel = 2'b00; #10;
+        sel = 2'b01; #10;
+        sel = 2'b10; #10;
+        sel = 2'b11; #10;
+        $finish;
+    end
+endmodule
